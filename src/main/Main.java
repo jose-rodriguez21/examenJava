@@ -19,14 +19,46 @@ public class Main {
          * Primer EJercicio
          */
 
-        String cadeinit = "Curso Java, 100, 8.8, 2020-01-01, Curso Python, 130, 9.0, 2012-03-22,Curso C, 200, 6.0, 2029-1215, Curso PHP,300, 8.0 ,2004-07-24";
-        List<String> listString = new ArrayList<String>(Arrays.asList(cadeinit.split(", ")));
+        String cadeinit = "Curso Java, 100, 8.8, 2020-01-01, Curso Python, 130, 9.0, 2012-03-22, Curso C, 200, 6.0, 2029-12-15, Curso PHP, 300, 8.0, 2004-07-24";
+        Course curso1 = new Course(new ArrayList<String>(Arrays.asList(cadeinit.substring(0,32).split(", "))));
+        Course curso2 = new Course(new ArrayList<String>(Arrays.asList(cadeinit.substring(34,70).split(", "))));
+        Course curso3 = new Course(new ArrayList<String>(Arrays.asList(cadeinit.substring(70,99).split(", "))));
+        Course curso4 = new Course(new ArrayList<String>(Arrays.asList(cadeinit.substring(101,cadeinit.length()).split(", "))));
 
-        Stream<String> streamList = listString.stream();
+        List<Course> listCourse = new ArrayList<>();
+        listCourse.add(curso1);
+        listCourse.add(curso2);
+        listCourse.add(curso3);
+        listCourse.add(curso4);
 
-        /**
-         * Segundo Ejercicio
-         */
+        System.out.println("Los nombres de los cursos son:");
+        Stream<Course> streamCourses = listCourse.stream();
+        streamCourses
+                .map(elem -> elem.getNameCurso())
+                .forEach(System.out::println);
+
+        System.out.println("\nLos cursos con horas mayores o iguales a 200 son:");
+        Stream<Course> streamCoursesHours = listCourse.stream();
+        streamCoursesHours
+                .filter(elem -> elem.getHours() >= 200)
+                .forEach(System.out::println);
+
+        System.out.println("\nLas fechas con formao dd/mm/yyyy son:");
+        Stream<Course> streamCoursesDate = listCourse.stream();
+        streamCoursesDate
+                .map(elem -> elem.getDateFinish().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
+                .forEach(System.out::println);
+
+        System.out.println("\nLos curos con calificación mayor a 8.5 son:");
+        Stream<Course> streamCoursesScore = listCourse.stream();
+        streamCoursesScore
+                .filter(elem -> elem.getScore() > 8.5)
+                .forEach(System.out::println);
+
+/**
+ * Segundo Ejercicio
+ */
+        System.out.println("\nSegundo Ejercicio\n");
 
         LocalDate fechaPresente = LocalDate.now();
         LocalDate fechaCumpleaños = LocalDate.parse("1994-02-18");
@@ -45,6 +77,7 @@ public class Main {
         /**
          * Tercer Ejercicio
          */
+        System.out.println("\nTercer Ejercicio\n");
 
         Optional<String> saludo = Optional.of("Hola esta es una instacia de la clase optional\n");
         System.out.println(saludo);
@@ -52,6 +85,7 @@ public class Main {
         /**
          * Cuarto ejercicio
          */
+        System.out.println("\nCuarto Ejercicio\n");
 
         InterfaceFunctSaludo staticref = Main::inicioSaludo;
         staticref.saludar();
